@@ -42,6 +42,7 @@
         <exec-maven-plugin.version>3.5.1</exec-maven-plugin.version>
         <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
         <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
 
         <!-- core -->
         <commons-lang3.version>3.17.0</commons-lang3.version>
@@ -306,7 +307,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
-                        <argLine>-Dfile.encoding=UTF-8 -Djava.awt.headless=true</argLine>
+                        <argLine>@{argLine} -Dfile.encoding=UTF-8 -Djava.awt.headless=true</argLine>
                         <excludes>
                             <!--
                                 Exclude the Integration Tests; see also the
