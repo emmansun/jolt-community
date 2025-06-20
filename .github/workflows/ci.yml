@@ -37,6 +37,7 @@ jobs:
       - name: Run tests with Maven
         run: mvn -B test --file pom.xml
       - name: Upload coverage to Codecov
+        if: ${{ matrix.java == '17' }}
         uses: codecov/codecov-action@v5
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_ORG_TOKEN }}
