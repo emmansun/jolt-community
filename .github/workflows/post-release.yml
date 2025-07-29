@@ -4,14 +4,11 @@ on:
   workflow_dispatch: # Manual trigger
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   main-to-develop-sync:
-    permissions:
-      contents: write
-      pull-requests: write
-
     runs-on: ubuntu-latest
 
     steps:
