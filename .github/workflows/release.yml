@@ -22,7 +22,7 @@ jobs:
           VERSION=${{ github.event.release.tag_name }}
           CLEAN_VERSION=${VERSION#v}
           echo "VERSION=$CLEAN_VERSION" >> $GITHUB_ENV
-          mvn versions:set -DnewVersion="${{ env.VERSION }}" -DprocessAllModules=true -DgenerateBackupPoms=false
+          mvn versions:set -DnewVersion="$CLEAN_VERSION" -DprocessAllModules=true -DgenerateBackupPoms=false
 
       - name: Create PR to update version
         uses: peter-evans/create-pull-request@v7
