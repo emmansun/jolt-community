@@ -22,15 +22,7 @@ jobs:
           VERSION=${{ github.event.release.tag_name }}
           CLEAN_VERSION=${VERSION#v}
           echo "VERSION=$CLEAN_VERSION" >> $GITHUB_ENV
-
-      - name: Create branch for version update
-        run: |
-          git checkout -b update-version-to-${{ env.VERSION }}
           mvn versions:set -DnewVersion="${{ env.VERSION }}" -DprocessAllModules=true -DgenerateBackupPoms=false
-          git config user.name "joltbot"
-          git config user.email "joltbot@users.noreply.github.com"
-          git commit -am "Update version to ${{ env.VERSION }}"
-          git push origin update-version-to-${{ env.VERSION }}
 
       - name: Create PR to update version
         uses: peter-evans/create-pull-request@v7
@@ -39,7 +31,6 @@ jobs:
           branch: update-version-to-${{ env.VERSION }}
           title: "Update version to ${{ env.VERSION }}"
           body: "This PR updates the version in pom.xml to match the release version."
-          base: main
           delete-branch: true
 
   publish:
