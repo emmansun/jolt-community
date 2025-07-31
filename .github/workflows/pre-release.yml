@@ -29,3 +29,4 @@ jobs:
           title: "Merge develop into main"
           body: "This PR merges changes from develop into main."
           branch: sync-develop-to-main
+          delete-branch: true

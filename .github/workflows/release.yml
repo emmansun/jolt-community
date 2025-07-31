@@ -28,6 +28,7 @@ jobs:
           git checkout -b update-version-to-${{ env.VERSION }}
           cd parent
           mvn versions:set -DnewVersion=${{ env.VERSION }} -DprocessAllModules=true
+          mvn versions:commit
           git config user.name "joltbot"
           git config user.email "joltbot@users.noreply.github.com"
           git commit -am "Update version to ${{ env.VERSION }}"
@@ -41,6 +42,7 @@ jobs:
           title: "Update version to ${{ env.VERSION }}"
           body: "This PR updates the version in pom.xml to match the release version."
           base: main
+          delete-branch: true
 
   publish:
     needs: update-version
@@ -70,7 +72,3 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_KEY_PASSWORD }}
-
-      - name: Delete version update branch
-        run: |
-          git push origin --delete update-version-to-${{ env.VERSION }}
