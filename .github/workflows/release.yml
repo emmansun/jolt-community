@@ -26,7 +26,7 @@ jobs:
       - name: Create branch for version update
         run: |
           git checkout -b update-version-to-${{ env.VERSION }}
-          mvn versions:set -DnewVersion=${{ env.VERSION }} -DprocessAllModules=true -DgenerateBackupPoms=false
+          mvn versions:set -DnewVersion="${{ env.VERSION }}" -DprocessAllModules=true -DgenerateBackupPoms=false
           git config user.name "joltbot"
           git config user.email "joltbot@users.noreply.github.com"
           git commit -am "Update version to ${{ env.VERSION }}"
