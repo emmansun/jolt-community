@@ -1,12 +1,11 @@
 name: Auto Publish to Maven Central
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published] # Trigger on release publish
 
 permissions:
-  contents: write
+  contents: read # Required for reading the repository contents
   packages: write # Required for publishing packages
 
 jobs:
@@ -24,23 +23,6 @@ jobs:
           server-password: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
-
-      - name: Extract version from commit message
-        id: extract_version
-        run: |
-          COMMIT_MSG=$(git log -1 --pretty=%B)
-          if [[ "$COMMIT_MSG" =~ ^Update\ version\ to\ ([0-9]+\.[0-9]+\.[0-9]+[-a-zA-Z0-9\.]*) ]]; then
-            VERSION="${BASH_REMATCH[1]}"
-            echo "VERSION=v$VERSION" >> $GITHUB_ENV
-          else
-            echo "No version update commit found."
-            exit 1
-          fi
-
-      - name: Update release tag
-        run: |
-          git tag -f ${{ env.VERSION }}
-          git push origin -f ${{ env.VERSION }}
 
       - name: Publish package
         run: mvn -P release --batch-mode deploy -DskipTests -DperformRelease=true
