@@ -28,6 +28,7 @@ jobs:
           git checkout -b update-version-to-${{ env.VERSION }}
           cd parent
           mvn versions:set -DnewVersion=${{ env.VERSION }} -DprocessAllModules=true
+          mvn versions:commit
           git config user.name "joltbot"
           git config user.email "joltbot@users.noreply.github.com"
           git commit -am "Update version to ${{ env.VERSION }}"
